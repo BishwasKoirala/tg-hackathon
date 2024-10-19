@@ -1,0 +1,17 @@
+# run-server
+python manage.py runsever
+
+# 仮想環境onLinux用
+source venv/bin/activate
+
+#　windows
+./venv/scripts/activate
+
+#クローン
+python -m venv venv #仮想環境作成
+./venv/scripts/activate 仮想環境on
+pip install django
+
+
+
+
