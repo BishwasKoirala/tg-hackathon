@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
-from .forms import AreaSelectionForm
+from .forms import AreaSelectionForm, GroupForm
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -36,10 +36,10 @@ def chat(request):
 
 ###############ログイン機能まとめ#################
 
-class CustomLoguinViews(LoginView):
+class CustomLoguinViews(LoginView): #ログイン機能
     template_name = "registration/login.html"
 
-def signup(request):
+def signup(request): #ユ－ザー登録機能
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -51,7 +51,7 @@ def signup(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
-def profile(request):
+def profile(request): #プロフィール確認,編集機能(地域とかニックネーム)
     # UserProfileが存在するか確認
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
 
@@ -75,7 +75,7 @@ def profile(request):
     })
 
 # プロファイル作成用の新しいビュー
-def create_profile(request):
+def create_profile(request): #プロフィール追加機能
     # 現在ログインしているユーザーを取得
     user = request.user
 
@@ -97,5 +97,21 @@ def create_profile(request):
             form = AreaSelectionForm()
 
         return render(request, 'accounts/create_profile.html', {'form': form})
+
+#################################################
+
+##################Group作成######################
+def create_group(request):
+    groups = Group.objects.all()
+    if request.method == 'POST':
+        Group_form = GroupForm(request.POST)
+        if Group_form.is_valid():
+            group = Group_form.save(commit=False)
+            group.admin_user = request.user
+            group.save()
+            return redirect('create_group')
+    else:
+        Group_form = GroupForm()
+    return render(request,'Area_matching/debug.html',{'Group_form':Group_form, 'groups':groups})
 
 #################################################

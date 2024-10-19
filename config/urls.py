@@ -1,7 +1,7 @@
 
 from django.contrib import admin
 from django.urls import path
-from Area_matching.views import index,user_reg,group,chat, signup, profile,create_profile
+from Area_matching.views import index,user_reg,group,chat, signup, profile,create_profile,create_group
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -15,4 +15,5 @@ urlpatterns = [
     path('accounts/signup/' , signup, name='signup'),
     path('accounts/profile/' , profile, name='profile'),
     path('accounts/profile/create/', create_profile, name='create_profile'),
+    path('create-group/', create_group, name='create_group'),
 ]
