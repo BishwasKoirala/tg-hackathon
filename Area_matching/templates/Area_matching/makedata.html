@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form method="post" action="{% url 'create_user' %}">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    <button type="submit">ユーザーを作成</button>
+  </form>
+  <hr>
+  <form method="post" action="{% url 'create_area' %}">
+    {% csrf_token %}
+    {{ area_form.as_p }}
+    <button type="submit">エリアを作成</button>
+    <hr>
+  </form>
+
+  {% for user in users %}
+  <h2>{{ user.name }}</h2>
+  {% endfor %}
+  {% for area in areas %}
+  <h2>{{ area.area_name }}</h2>
+  {% endfor %}
+</body>
+</html>

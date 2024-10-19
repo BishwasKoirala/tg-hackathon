@@ -10,8 +10,12 @@
   <a href = "{% url 'user_reg'%}">
     <button>スタート</button>
   </a>
+
+  
   {% for user in users %}
   <h2>{{ user.name }}</h2>
+  <h2>{{ user.area }}</h2>
+  <h2>{{ user.id }}</h2>
   {% endfor %}
   {% for area in areas %}
   <h2>{{ area.area_name }}</h2>
