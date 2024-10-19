@@ -7,9 +7,37 @@
 </head>
 <body>
   <h1>地域マッチングアプリ</h1>
-  <a href = "{% url 'user_reg'%}">
-    <button>スタート</button>
-  </a>
+  <h3>Hello {{ user.username }}</h3>
+  {% if user.is_authenticated %}
+    <a href = "{% url 'user_reg'%}">
+      <button>スタート</button>
+    </a>
+  {% endif %}
+  <br>
+  <hr>
+    <!-- ログインとかのやつ -->
+     {% if not user.is_authenticated %}
+    <a href="{% url 'login' %}">
+      <button>ログイン</button>
+    </a>
+    <br>
+    <hr>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <form action="{% url 'logout' %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+    {% endif %}
+    <br>
+    <hr>
+    {% if user.is_authenticated %}
+    <a href = "{% url 'profile'%}">
+      <button>プロファイルへ</button>
+    </a>
+  {% endif %}
+    <!--   -->
+
   {% for user in users %}
   <h2>{{ user.name }}</h2>
   {% endfor %}

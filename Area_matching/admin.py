@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Area,Chat,Group,User
+from .models import Area,Chat,Group,UserProfile
 # Register your models here.
 
-admin.site.register(User)
+admin.site.register(UserProfile)
 admin.site.register(Area)
 admin.site.register(Group)
 admin.site.register(Chat)
