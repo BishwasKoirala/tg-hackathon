@@ -12,6 +12,10 @@ python -m venv venv #仮想環境作成
 ./venv/scripts/activate 仮想環境on
 pip install django
 
+# db migration # 自分の環境にclone したら必ず！！
+python manage.py makemigrations
+python manage.py migrate                                
+
 
 
 

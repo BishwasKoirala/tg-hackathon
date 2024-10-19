@@ -29,7 +29,7 @@ class User(models.Model):
 class Group(models.Model) : 
     group_name = models.CharField(max_length=20)
     admin_user = models.ForeignKey(User, on_delete=models.SET_NULL , null=True , related_name='group')
-    area = models.ForeignKey(Area, on_delete=models.SET_NULL,null=True,related_name='area')
+    area = models.ForeignKey(Area, on_delete=models.CASCADE,null=True,related_name='area')
     # hobby = models.ManyToManyField(Hobby)
 
     def __str__(self):
@@ -39,11 +39,7 @@ class Group(models.Model) :
 
 
 class Chat(models.Model) :
-    group_id = models.ForeignKey(Group, on_delete=models.CASCADE , related_name='chat')
-    user_id = models.ForeignKey(User,on_delete=models.CASCADE, related_name='user')
+    group = models.ForeignKey(Group, on_delete=models.CASCADE , related_name='chat')
+    user = models.ForeignKey(User,on_delete=models.CASCADE, related_name='user')
     text = models.TextField(default=None)
     posted_at=models.DateTimeField(auto_now_add=True)
-
-
-    def __str__(self):
-        return self.chat_name
