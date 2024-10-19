@@ -7,7 +7,7 @@ source venv/bin/activate
 #　windows
 ./venv/scripts/activate
 
-#クローン
+#クローン　からの流れ！
 python -m venv venv #仮想環境作成
 ./venv/scripts/activate 仮想環境on
 pip install django
