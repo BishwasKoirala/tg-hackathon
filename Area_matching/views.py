@@ -50,7 +50,7 @@ def signup(request): #ユ－ザー登録機能
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
-
+@login_required
 def profile(request): #プロフィール確認,編集機能(地域とかニックネーム)
     # UserProfileが存在するか確認
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
@@ -74,7 +74,8 @@ def profile(request): #プロフィール確認,編集機能(地域とかニッ�
         'form': form 
     })
 
-# プロファイル作成用の新しいビュー
+
+@login_required
 def create_profile(request): #プロフィール追加機能
     # 現在ログインしているユーザーを取得
     user = request.user
@@ -101,8 +102,12 @@ def create_profile(request): #プロフィール追加機能
 #################################################
 
 ##################Group作成######################
+@login_required
 def create_group(request):
-    groups = Group.objects.all()
+    user_profile = UserProfile.objects.get(user=request.user)
+    user_area = user_profile.area
+    groups = Group.objects.filter(area=user_area)  # ユーザーの地域に基づいてグループをフィルタリング
+
     if request.method == 'POST':
         Group_form = GroupForm(request.POST)
         if Group_form.is_valid():
@@ -112,6 +117,8 @@ def create_group(request):
             return redirect('create_group')
     else:
         Group_form = GroupForm()
-    return render(request,'Area_matching/debug.html',{'Group_form':Group_form, 'groups':groups})
+    return render(request,'Area_matching/debug.html',{'Group_form':Group_form,'groups':groups})
+
+
 
 #################################################
