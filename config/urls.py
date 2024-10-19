@@ -16,7 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from Area_matching.views import index,user_reg,group,chat
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', index , name="index"),
+    path('user_reg/',user_reg, name="user_reg"),
+    path('group/',group, name="group"),
+    path('chat/',chat,name='chat')
 ]

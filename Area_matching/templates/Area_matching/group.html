@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>グループ表示画面</title>
+  <style>
+    .container {
+      display: flex;
+      width: 100%;
+      height: 100vh;
+    }
+    .group, .user {
+      width: 60%; /* Adjust the width as needed */
+      background-color: #f0f0f0; /* Default background */
+      border: 2px solid #ccc; /* Border for group section */
+      margin: 10px; /* Space between the sections */
+      padding: 20px; /* Space inside the sections */
+      text-align: center;
+      vertical-align: middle;
+    }
+    .user {
+      width: 40%; /* Adjust the width for user section */
+      background-color: #e0e0e0; /* User section background */
+    }
+    .user-wrapper {
+      border: 2px solid #666; /* Darker border for user section */
+      padding: 10px; /* Space inside the user section border */
+      margin-bottom: 20px; /* Space below the user section */
+    }
+    .group-wrapper {
+      border: 2px solid #666; /* Darker border for group section */
+      padding: 10px; /* Space inside the group section border */
+      margin-bottom: 20px; /* Space below the group section */
+    }
+    .user ul {
+      list-style-position: inside; /* リストの位置をインサイドに */
+      padding-left: 0; /* 左のパディングを削除 */
+      margin: 0; /* マージンを削除 */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="group">
+      <div class="group-wrapper"> <!-- 追加 -->
+        <h3>マッチングしたグループ</h3> 
+      </div> <!-- 追加 -->
+      <ul>
+        <li>アニメ_ガチ勢
+          <a href="{% url 'chat'%}">
+            <button>チャットへ参加</button>
+          </a>
+        </li><br>
+        
+        <li>アニメ_ライト
+          <button>チャットへ参加</button>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="user">
+      <div class="user-wrapper">
+        <h3>マッチングしたユーザ</h3>
+      </div>
+      <ul style="list-style-position: inside; padding-left: 0;">
+        <li>B・フィルー　さん
+          <a href="{% url 'chat'%}">
+            <button>チャットへ参加</button>
+          </a>
+        </li><br>
+        
+        <li>ルナト　さん
+          <button>チャットへ参加</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

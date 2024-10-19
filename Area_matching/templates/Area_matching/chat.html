@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>チャットルーム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        #chat-container {
+            width: 400px;
+            height: 500px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        #messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            border-bottom: 1px solid #eee;
+        }
+        .message {
+            margin-bottom: 10px;
+        }
+        .message .user {
+            font-weight: bold;
+        }
+        .message .text {
+            margin-left: 10px;
+        }
+        #input-container {
+            display: flex;
+            padding: 10px;
+        }
+        #input-container input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #input-container button {
+            padding: 10px 15px;
+            margin-left: 10px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #input-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>{{ group.title }}</h1>
+    <div id="chat-container">
+        <div id="messages"></div>
+        <div id="input-container">
+            <input type="text" id="messageInput" placeholder="メッセージを入力...">
+            <button onclick="sendMessage()">送信</button>
+        </div>
+    </div>
+
+    <script>
+        const messagesDiv = document.getElementById('messages');
+        const messageInput = document.getElementById('messageInput');
+
+        function sendMessage() {
+            const messageText = messageInput.value.trim();
+            //何も入力していない場合、実行されない
+            if (messageText === "") return;
+            //テキストのスタイルを指定するためのdivクラスを用意する
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            //
+            const userSpan = document.createElement('span');
+            userSpan.classList.add('user');
+            userSpan.textContent = "user";
+
+            const textSpan = document.createElement('span');
+            textSpan.classList.add('text');
+            textSpan.textContent = messageText;
+
+            messageDiv.appendChild(userSpan);
+            messageDiv.appendChild(textSpan);
+            messagesDiv.appendChild(messageDiv);
+
+            messageInput.value = "";
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Enterキーでも送信できるように
+        messageInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
