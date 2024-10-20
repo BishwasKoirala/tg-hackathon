@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -18,13 +18,14 @@ class Area(models.Model) :
 #         return self.hobby_name
 
 
-class User(models.Model):
-    name = models.CharField(max_length=20) 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    nickname=models.CharField(max_length=10)
     area = models.ForeignKey(Area, on_delete=models.SET_NULL,null=True,related_name='user')
     # hobby = models.ManyToManyField(Hobby)
 
     def __str__(self):
-        return self.name
+        return f"{self.user.username}'s profile"
     
 class Group(models.Model) : 
     group_name = models.CharField(max_length=20)
@@ -43,3 +44,6 @@ class Chat(models.Model) :
     user = models.ForeignKey(User,on_delete=models.CASCADE, related_name='user')
     text = models.TextField(default=None)
     posted_at=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Chat by {self.user.username} in {self.group.group_name}"

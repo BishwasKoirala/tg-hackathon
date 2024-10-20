@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+</head>
+<body>
+    <h2>こんちは, {{ user.username }}!</h2>
+
+    <p>あなたのニックネームは: {{ user_profile.nickname }}です</p>
+    <p>あなたの地域は: {{ user_profile.area.area_name }}です</p>
+    
+    <p>地域を変更する:</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">保存</button>
+    </form>
+
+    <a href="{% url 'index' %}">index</a>
+    <a href="{% url 'logout' %}">Logout</a>
+</body>
+</html>

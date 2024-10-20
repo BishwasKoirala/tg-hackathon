@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>地域マッチングアプリ</h1>
+  <div>
+    <h3>グループ作成</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ Group_form.as_p }}
+        <button type="submit">保存</button>
+    </form>
+  </div>
+  <div>
+    {% for group in groups %}
+    <p>グループ名: {{ group.group_name }}</p>
+    <p>作成者: {{ group.admin_user.userprofile.nickname }}</p>
+    <p>地域: {{ group.area }}</p>
+    {% endfor %}
+  </div>
+
+  <a href="{% url 'index' %}">index</a>
+</body>
+</html>
