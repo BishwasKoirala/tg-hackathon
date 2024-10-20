@@ -72,16 +72,16 @@
 </head>
 <body>
     <div class="container">
-    <h2>こんちは, {{ user.username }}!</h2>
+    <h2>こんちは(Hello!), {{ user.username }}!</h2>
 
-    <p>あなたのニックネームは: {{ user_profile.nickname }}です</p>
-    <p>あなたの地域は: {{ user_profile.area.area_name }}です</p>
+    <p>あなたのニックネームは(Your nickname): {{ user_profile.nickname }}です</p>
+    <p>あなたの地域は(Your area): {{ user_profile.area.area_name }}です</p>
     
-    <p>地域を変更する:</p>
+    <p>地域を変更する(Change your area):</p>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">保存</button>
+        <button type="submit">保存(Change)</button>
     </form>
 
     <div class="link-group">

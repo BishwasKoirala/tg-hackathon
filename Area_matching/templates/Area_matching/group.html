@@ -64,22 +64,61 @@
       text-align: center;
       margin-top: 20px;
     }
+        /* ナビゲーションバーのスタイル */
+        .nav-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 10px 0;
+    }
+
+    nav {
+      background-color: #333;
+      padding: 10px 0;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      padding: 14px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      display: inline-block;
+    }
+
+    nav a:hover {
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 5px;
+    }
+
   </style>
 </head>
 <body>
-  <h1>チャットを選択</h1>
+    <!-- ナビゲーションバー -->
+    <div class="nav-container">
+      <nav>
+        <a href="{% url 'index' %}">ホーム</a>
+        <a href="{% url 'profile' %}">プロファイル</a>
+        <a href="{% url 'create_group' %}">グループ作成</a>
+        <a href="{% url 'logout' %}">ログアウト</a>
+      </nav>
+    </div>
+  <h1>チャットを選択(Select chat)</h1>
   <div class="container">
     <div class="group">
       <div class="group-wrapper">
-        <h3>マッチングしたグループ</h3>
+        <h3>マッチングしたグループ(Recommended groups for you)</h3>
       </div>
       <ul>
         {% for group in groups %}
         <li>
           <p>{{ group.group_name }}</p>
-          <p>地域: {{ group.area }}</p>
-          <p>管理者: {{ group.admin_user.userprofile.nickname }}</p>
-          <a href="{% url 'chat' %}"><button>チャットへ参加</button></a>
+          <p>地域/Area: {{ group.area }}</p>
+          <p>管理者(Nickname): {{ group.admin_user.userprofile.nickname }}</p>
+          <a href="{% url 'chat' %}"><button>チャットへ参加(go to chat)</button></a>
         </li>
         {% endfor %}
       </ul>
@@ -87,13 +126,13 @@
 
     <div class="user">
       <div class="user-wrapper">
-        <h3>マッチングしたユーザ</h3>
+        <h3>マッチングしたユーザ(Recommended users for you)</h3>
       </div>
       <ul>
         {% for matching_user in matching_users %}
         <li>
-          <p>マッチングしたユーザー: {{ matching_user.user.userprofile.nickname }}</p>
-          <a href="{% url 'chat'%}"><button>チャットへ参加</button></a>
+          <p>ユーザー(Nickname): {{ matching_user.user.userprofile.nickname }}</p>
+          <a href="{% url 'chat'%}"><button>チャットへ参加(go to chat)</button></a>
         </li>
         {% endfor %}
       </ul>

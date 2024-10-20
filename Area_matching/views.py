@@ -33,8 +33,7 @@ def user_reg_eng(request):
     return render(request,"Area_matching/user_reg_eng.html")
 
 def login_eng(request):
-    return render(request,"Area_matching/login_eng.html")
-
+    return render(request,"registration/login_eng.html")
 
 def group(request):
     group = Group.objects.all()
@@ -53,11 +52,7 @@ def chat_eng(request):
 ###############ログイン機能まとめ#################
 
 class CustomLoguinViews(LoginView): #ログイン機能
-    template_name = "registration/login.html"
-
-
-#class CustomLoguinViews_eng(LoginView): #ログイン機能
-#    template_name = "registration/login_eng.html"
+    template_name = "registration/login_eng.html"
 
 def signup(request): #ユ－ザー登録機能
     if request.method == 'POST':
@@ -144,25 +139,25 @@ def create_group(request):
     return render(request,'Area_matching/debug.html',{'Group_form':Group_form,'groups':groups,'matching_users':matching_users})
 
 
+
 def chatting(request,id):
-    # group = get_object_or_404(Group, id=id)
-    # chat = get_object_or_404(Chat , id=group.id)
-    chat = get_object_or_404(Chat , id=Chat.group.id)
-    chats = chat.objects.all()
+    group = get_object_or_404(Group, id=id)
+    chats = group.chat.all()
     form = ChatForm()
     if request.method == 'POST':
+        form = ChatForm(request.POST)
         if form.is_valid():
-            chat = Chat.save(commit=False)
+            chat = form.save(commit=False)
             chat.user = request.user
+            chat.group = group
             chat.save()
-            return redirect('chatting',id=chat.id)
-    else:
-        form.ChatForm()
-    return render(request,'Area_matching/debug_chat.html',{'form':form,'chats':chats})
+            return redirect('group_chat',id=group.id)
+        else:
+            form.ChatForm()
+    return render(request,'Area_matching/debug_chat.html',{'form':form,'group': group, 'chats':chats})
 
 
-    
-    
+
 
 
 #################################################
@@ -173,7 +168,7 @@ def group_user_matching(request):
     groups = Group.objects.filter(area=user_area)
     matching_users = UserProfile.objects.filter(area = user_area)  
 
-    return render(request,'group.html',{'matched_groups':groups,'matching_users':matching_users})
+    return render(request,'Area_matching/group.html',{'matched_groups':groups,'matching_users':matching_users})
 
 
 

@@ -17,7 +17,7 @@ urlpatterns = [
     #path('chat_eng/',chat_eng,name='chat_eng'),
 
     path('accounts/login/',auth_views.LoginView.as_view(), name = 'login'),
-    #path('accounts/login_eng/',auth_views.LoginView.as_view(),name='login_eng'),
+    path('accounts/login_eng/',auth_views.LoginView.as_view(),name='login_eng'),
 
     path('accounts/logout/' , auth_views.LogoutView.as_view(), name='logout'),
 
@@ -29,7 +29,7 @@ urlpatterns = [
 
     path('accounts/profile/create/', create_profile, name='create_profile'),
     path('create-group/', create_group, name='create_group'),
-    path('group/<int:id>/chat/', chatting , name='group_chat'),
+    path('group/<int:id>/chat/', chatting, name='group_chat'),
+    #path('group/<int:id>/chat/', chatting , name='group_chat'),
     path('chat/<int:group>/chat/', chatting , name='group_chat'),
 ]
-
