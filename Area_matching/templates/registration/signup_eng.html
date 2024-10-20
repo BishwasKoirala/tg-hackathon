@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Sign Up</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,7 +15,7 @@
             align-items: center;
             height: 100vh;
         }
-        .login-container {
+        .signup-container {
             background-color: #fff;
             padding: 20px;
             border-radius: 10px;
@@ -26,13 +26,15 @@
         h2 {
             text-align: center;
             color: #333;
+            margin-bottom: 20px;
         }
         form {
             display: flex;
             flex-direction: column;
         }
         input[type="text"],
-        input[type="password"] {
+        input[type="password"],
+        input[type="email"] {
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
@@ -65,14 +67,14 @@
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>ログイン</h2>
+    <div class="signup-container">
+        <h2>Sign Up</h2>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">ログイン</button>
+            <button type="submit">Sign Up</button>
         </form>
-        <p>アカウントをお持ちでない方は、<a href="{% url 'signup' %}">こちらからサインアップしてください</a></p>
+        <p>Already have an account? <a href="{% url 'login_eng' %}">Login here</a></p>
     </div>
 </body>
 </html>

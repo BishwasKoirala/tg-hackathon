@@ -3,15 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>地域マッチングアプリ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #4CAF50;
+      text-align: center;
+    }
+
+    h3 {
+      color: #333;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 16px;
+      margin: 10px 0;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #ddd;
+      margin: 20px 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .user-list h2 {
+      color: #333;
+      font-size: 18px;
+    }
+  </style>
 </head>
 <body>
+  <div class = 'container'>
   <h1>地域マッチングアプリ</h1>
   <h3>Hello {{ user.username }}</h3>
   <a href="{% url 'create_group' %}">デバッグページ</a>
+
   {% if user.is_authenticated %}
     <a href = "{% url 'user_reg'%}">
-      <button>スタート</button>
+      <button type = "button">スタート</button>
     </a>
   {% endif %}
   <br>
@@ -22,6 +82,7 @@
       <button>ログイン</button>
     </a>
     <br>
+    
     <hr>
     {% endif %}
     {% if user.is_authenticated %}
@@ -38,12 +99,18 @@
     </a>
   {% endif %}
     <!--   -->
+  
+  <div class="user-list">
+    {% for user in users %}
+      <h2>{{ user.name }}</h2>
+    {% endfor %}
+  </div>
 
-  {% for user in users %}
-  <h2>{{ user.name }}</h2>
-  {% endfor %}
+  <div class = "area-list">
   {% for area in areas %}
   <h2>{{ area.area_name }}</h2>
   {% endfor %}
+  </div>
+</div>
 </body>
 </html>

@@ -31,6 +31,7 @@ class Group(models.Model) :
     group_name = models.CharField(max_length=20)
     admin_user = models.ForeignKey(User, on_delete=models.SET_NULL , null=True , related_name='group')
     area = models.ForeignKey(Area, on_delete=models.CASCADE,null=True,related_name='area')
+    
     # hobby = models.ManyToManyField(Hobby)
 
     def __str__(self):

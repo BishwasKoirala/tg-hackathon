@@ -1,5 +1,5 @@
 from django import forms
-from .models import Area,Group
+from .models import Area,Group,Chat
 
 
 ##プロフィール作成、編集用Form
@@ -13,3 +13,8 @@ class GroupForm(forms.ModelForm):
     class Meta:
         model = Group
         fields= ['group_name', 'area']
+
+class ChatForm(forms.ModelForm):
+    class Meta:
+        model = Chat
+        fields = ['text']

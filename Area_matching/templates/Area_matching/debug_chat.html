@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ group.group_name }}のチャット</title>
+</head>
+<body>
+  <h1>{{ group.group_name }}のチャット</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">送信</button>
+  </form>
+
+  <div>
+    <h2>チャットメッセージ</h2>
+    {% for chat in chats %}
+      <p><strong>{{ chat.user.userprofile.nickname }}:</strong> {{ chat.text }}</p>
+    {% empty %}
+      <p>まだチャットメッセージはありません。</p>
+    {% endfor %}
+  </div>
+
+  <a href="{% url 'create_group' %}">グループ作成ページへ</a>
+</body>
+</html>

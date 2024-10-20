@@ -7,100 +7,136 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .register-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
         }
         h1 {
+            text-align: center;
             color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
         }
         label {
-            display: inline-block; /* Keep inline-block for horizontal alignment */
-            margin-right: 10px; /* Add some space between the checkbox and label */
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .hobby-group {
+            margin-bottom: 20px;
+        }
+        .hobby-group strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
         }
         input[type="checkbox"] {
             margin-right: 5px;
         }
         button {
-            padding: 10px 15px;
-            background-color: #007BFF;
+            padding: 10px;
+            background-color: #28a745;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #218838;
         }
-        .hobby-group {
-            margin-bottom: 15px; /* Add space between each hobby group */
+        p {
+            text-align: center;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <h1>ユーザー登録</h1>
-    <form method="POST" action="{% url 'group' %}">
-        <div style="display: none;">
+    <div class="register-container">
+        <h1>ユーザー登録</h1>
+        <form method="POST" action="{% url 'group' %}">
             {% csrf_token %}
-        </div>
-        <label for="nickname">ニックネーム:</label>
-        <input type="text" id="nickname" name="nickname" required>
+            <label for="nickname">ニックネーム:</label>
+            <input type="text" id="nickname" name="nickname" required>
 
-        <br> <!-- Add a line break between ニックネーム and 地域 -->
+            <label for="region">地域:</label>
+            <input type="text" id="region" name="region" required>
 
-        <label for="region">地域:</label>
-        <input type="text" id="region" name="region" required>
-
-        <br> <!-- Add a line break here to push the 趣味 label to a new line -->
-        <label>趣味:</label><br> <!-- Move the 趣味 label to a new line above ガーデニング -->
-        
-        <div>
-            <!-- Add アニメ section at the top -->
-            <div class="hobby-group">
-                <strong>アニメ</strong><br>
-                <input type="checkbox" id="hobby_anime_gachi" name="hobbies" value="アニメ＿ガチ">
-                <label for="hobby_anime_gachi">ガチ</label>
-                <input type="checkbox" id="hobby_anime_light" name="hobbies" value="アニメ＿ライト">
-                <label for="hobby_anime_light">ライト</label>
+            <label>趣味:</label>
+            <div>
+                <div class="hobby-group">
+                    <strong>アニメ</strong>
+                    <input type="checkbox" id="hobby_anime_gachi" name="hobbies" value="アニメ＿ガチ">
+                    <label for="hobby_anime_gachi">ガチ</label>
+                    <input type="checkbox" id="hobby_anime_light" name="hobbies" value="アニメ＿ライト">
+                    <label for="hobby_anime_light">ライト</label>
+                </div>
+                <div class="hobby-group">
+                    <strong>ガーデニング</strong>
+                    <input type="checkbox" id="hobby_gardening_gachi" name="hobbies" value="ガーデニング＿ガチ">
+                    <label for="hobby_gardening_gachi">ガチ</label>
+                    <input type="checkbox" id="hobby_gardening_light" name="hobbies" value="ガーデニング＿ライト">
+                    <label for="hobby_gardening_light">ライト</label>
+                </div>
+                <div class="hobby-group">
+                    <strong>スポーツ</strong>
+                    <input type="checkbox" id="hobby1_gachi" name="hobbies" value="スポーツ＿ガチ">
+                    <label for="hobby1_gachi">ガチ</label>
+                    <input type="checkbox" id="hobby1_light" name="hobbies" value="スポーツ＿ライト">
+                    <label for="hobby1_light">ライト</label>
+                </div>
+                <div class="hobby-group">
+                    <strong>音楽</strong>
+                    <input type="checkbox" id="hobby2_gachi" name="hobbies" value="音楽＿ガチ">
+                    <label for="hobby2_gachi">ガチ</label>
+                    <input type="checkbox" id="hobby2_light" name="hobbies" value="音楽＿ライト">
+                    <label for="hobby2_light">ライト</label>
+                </div>
+                <div class="hobby-group">
+                    <strong>読書</strong>
+                    <input type="checkbox" id="hobby3_gachi" name="hobbies" value="読書＿ガチ">
+                    <label for="hobby3_gachi">ガチ</label>
+                    <input type="checkbox" id="hobby3_light" name="hobbies" value="読書＿ライト">
+                    <label for="hobby3_light">ライト</label>
+                </div>
+                <div class="hobby-group">
+                    <strong>旅行</strong>
+                    <input type="checkbox" id="hobby4_gachi" name="hobbies" value="旅行＿ガチ">
+                    <label for="hobby4_gachi">ガチ</label>
+                    <input type="checkbox" id="hobby4_light" name="hobbies" value="旅行＿ライト">
+                    <label for="hobby4_light">ライト</label>
+                </div>
             </div>
-
-            <!-- Existing hobbies below -->
-            <div class="hobby-group">
-                <strong>ガーデニング</strong><br>
-                <input type="checkbox" id="hobby_gardening_gachi" name="hobbies" value="ガーデニング＿ガチ">
-                <label for="hobby_gardening_gachi">ガチ</label>
-                <input type="checkbox" id="hobby_gardening_light" name="hobbies" value="ガーデニング＿ライト">
-                <label for="hobby_gardening_light">ライト</label>
-            </div>
-            <div class="hobby-group">
-                <strong>スポーツ</strong><br>
-                <input type="checkbox" id="hobby1_gachi" name="hobbies" value="スポーツ＿ガチ">
-                <label for="hobby1_gachi">ガチ</label>
-                <input type="checkbox" id="hobby1_light" name="hobbies" value="スポーツ＿ライト">
-                <label for="hobby1_light">ライト</label>
-            </div>
-            <div class="hobby-group">
-                <strong>音楽</strong><br>
-                <input type="checkbox" id="hobby2_gachi" name="hobbies" value="音楽＿ガチ">
-                <label for="hobby2_gachi">ガチ</label>
-                <input type="checkbox" id="hobby2_light" name="hobbies" value="音楽＿ライト">
-                <label for="hobby2_light">ライト</label>
-            </div>
-            <div class="hobby-group">
-                <strong>読書</strong><br>
-                <input type="checkbox" id="hobby3_gachi" name="hobbies" value="読書＿ガチ">
-                <label for="hobby3_gachi">ガチ</label>
-                <input type="checkbox" id="hobby3_light" name="hobbies" value="読書＿ライト">
-                <label for="hobby3_light">ライト</label>
-            </div>
-            <div class="hobby-group">
-                <strong>旅行</strong><br>
-                <input type="checkbox" id="hobby4_gachi" name="hobbies" value="旅行＿ガチ">
-                <label for="hobby4_gachi">ガチ</label>
-                <input type="checkbox" id="hobby4_light" name="hobbies" value="旅行＿ライト">
-                <label for="hobby4_light">ライト</label>
-            </div>
-        </div>
-
-        <button type="submit">登録する</button>
-    </form>
+            <button type="submit">登録する</button>
+        </form>
+    </div>
 </body>
 </html>

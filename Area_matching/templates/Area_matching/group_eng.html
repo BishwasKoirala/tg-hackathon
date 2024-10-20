@@ -67,19 +67,19 @@
   </style>
 </head>
 <body>
-  <h1>チャットを選択</h1>
+  <h1>select chat</h1>
   <div class="container">
     <div class="group">
       <div class="group-wrapper">
-        <h3>マッチングしたグループ</h3>
+        <h3>Recommended groups for you</h3>
       </div>
       <ul>
         {% for group in groups %}
         <li>
-          <p>{{ group.group_name }}</p>
-          <p>地域: {{ group.area }}</p>
-          <p>管理者: {{ group.admin_user.userprofile.nickname }}</p>
-          <a href="{% url 'chat' %}"><button>チャットへ参加</button></a>
+          <p>Group name:{{ group.group_name }}<p>
+          <p>Area: {{ group.area }}</p>
+          <p>Nickname: {{ group.admin_user.userprofile.nickname }}</p>
+          <a href="{% url 'chat_eng' %}"><button>go to chat</button></a>
         </li>
         {% endfor %}
       </ul>
@@ -87,13 +87,13 @@
 
     <div class="user">
       <div class="user-wrapper">
-        <h3>マッチングしたユーザ</h3>
+        <h3>Recommended users for you</h3>
       </div>
       <ul>
         {% for matching_user in matching_users %}
         <li>
-          <p>マッチングしたユーザー: {{ matching_user.user.userprofile.nickname }}</p>
-          <a href="{% url 'chat'%}"><button>チャットへ参加</button></a>
+          <p>User name: {{ matching_user.user.userprofile.nickname }}</p>
+          <a href="{% url 'chat_eng'%}"><button>go to chat</button></a>
         </li>
         {% endfor %}
       </ul>

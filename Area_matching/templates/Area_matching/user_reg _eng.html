@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .register-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .hobby-group {
+            margin-bottom: 20px;
+        }
+        .hobby-group strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        p {
+            text-align: center;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h1>User Registration</h1>
+        <form method="POST" action="{% url 'group_eng' %}">
+            {% csrf_token %}
+            <label for="nickname">Nickname:</label>
+            <input type="text" id="nickname" name="nickname" required>
+
+            <label for="region">Region:</label>
+            <input type="text" id="region" name="region" required>
+
+            <label>Hobbies:</label>
+            <div>
+                <div class="hobby-group">
+                    <strong>Anime</strong>
+                    <input type="checkbox" id="hobby_anime_gachi" name="hobbies" value="Anime_Enthusiast">
+                    <label for="hobby_anime_gachi">Enthusiast</label>
+                    <input type="checkbox" id="hobby_anime_light" name="hobbies" value="Anime_Casual">
+                    <label for="hobby_anime_light">Casual</label>
+                </div>
+                <div class="hobby-group">
+                    <strong>Gardening</strong>
+                    <input type="checkbox" id="hobby_gardening_gachi" name="hobbies" value="Gardening_Enthusiast">
+                    <label for="hobby_gardening_gachi">Enthusiast</label>
+                    <input type="checkbox" id="hobby_gardening_light" name="hobbies" value="Gardening_Casual">
+                    <label for="hobby_gardening_light">Casual</label>
+                </div>
+                <div class="hobby-group">
+                    <strong>Sports</strong>
+                    <input type="checkbox" id="hobby1_gachi" name="hobbies" value="Sports_Enthusiast">
+                    <label for="hobby1_gachi">Enthusiast</label>
+                    <input type="checkbox" id="hobby1_light" name="hobbies" value="Sports_Casual">
+                    <label for="hobby1_light">Casual</label>
+                </div>
+                <div class="hobby-group">
+                    <strong>Music</strong>
+                    <input type="checkbox" id="hobby2_gachi" name="hobbies" value="Music_Enthusiast">
+                    <label for="hobby2_gachi">Enthusiast</label>
+                    <input type="checkbox" id="hobby2_light" name="hobbies" value="Music_Casual">
+                    <label for="hobby2_light">Casual</label>
+                </div>
+                <div class="hobby-group">
+                    <strong>Reading</strong>
+                    <input type="checkbox" id="hobby3_gachi" name="hobbies" value="Reading_Enthusiast">
+                    <label for="hobby3_gachi">Enthusiast</label>
+                    <input type="checkbox" id="hobby3_light" name="hobbies" value="Reading_Casual">
+                    <label for="hobby3_light">Casual</label>
+                </div>
+                <div class="hobby-group">
+                    <strong>Travel</strong>
+                    <input type="checkbox" id="hobby4_gachi" name="hobbies" value="Travel_Enthusiast">
+                    <label for="hobby4_gachi">Enthusiast</label>
+                    <input type="checkbox" id="hobby4_light" name="hobbies" value="Travel_Casual">
+                    <label for="hobby4_light">Casual</label>
+                </div>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -66,13 +66,13 @@
 </head>
 <body>
     <div class="login-container">
-        <h2>ログイン</h2>
+        <h2>Login</h2>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">ログイン</button>
+            <button type="submit">Login</button>
         </form>
-        <p>アカウントをお持ちでない方は、<a href="{% url 'signup' %}">こちらからサインアップしてください</a></p>
+        <p>Don't have an account? <a href="{% url 'signup_eng' %}">Sign up here</a></p>
     </div>
 </body>
 </html>

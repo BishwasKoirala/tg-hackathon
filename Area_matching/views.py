@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from .models import Area,Chat,Group,UserProfile
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
-from .forms import AreaSelectionForm, GroupForm
+from .forms import AreaSelectionForm, GroupForm,ChatForm
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -26,6 +26,16 @@ def user_reg(request):
     
     return render(request,"Area_matching/user_reg.html")
 
+def user_reg_eng(request):
+    user = User.objects.all()
+    area = Area.objects.all()
+    
+    return render(request,"Area_matching/user_reg_eng.html")
+
+def login_eng(request):
+    return render(request,"Area_matching/login_eng.html")
+
+
 def group(request):
     group = Group.objects.all()
     return render(request,"Area_matching/group.html")
@@ -34,18 +44,28 @@ def chat(request):
     chat = Chat.objects.all()
     return render(request,"Area_matching/chat.html")
 
+
+def chat_eng(request):
+    chat = Chat.objects.all()
+    return render(request,"Area_matching/chat_eng.html")
+
+
 ###############ログイン機能まとめ#################
 
 class CustomLoguinViews(LoginView): #ログイン機能
     template_name = "registration/login.html"
 
+
+#class CustomLoguinViews_eng(LoginView): #ログイン機能
+#    template_name = "registration/login_eng.html"
+
 def signup(request): #ユ－ザー登録機能
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-        if form.is_valid():
+        if form.is_valid(): #form使えんの？
             user = form.save()
             login(request, user)
-            return redirect('profile')
+            return redirect('profle')
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
@@ -101,12 +121,16 @@ def create_profile(request): #プロフィール追加機能
 
 #################################################
 
-##################Group作成######################
+##################Group作成######################同じエリアのグルーも撮ってくれる
 @login_required
 def create_group(request):
     user_profile = UserProfile.objects.get(user=request.user)
     user_area = user_profile.area
     groups = Group.objects.filter(area=user_area)  # ユーザーの地域に基づいてグループをフィルタリング
+
+    user_profile = UserProfile.objects.get(user=request.user)
+    user_area = user_profile.area
+    matching_users = UserProfile.objects.filter(area = user_area)
 
     if request.method == 'POST':
         Group_form = GroupForm(request.POST)
@@ -117,8 +141,44 @@ def create_group(request):
             return redirect('create_group')
     else:
         Group_form = GroupForm()
-    return render(request,'Area_matching/debug.html',{'Group_form':Group_form,'groups':groups})
+    return render(request,'Area_matching/debug.html',{'Group_form':Group_form,'groups':groups,'matching_users':matching_users})
 
+
+def chatting(request,id):
+    # group = get_object_or_404(Group, id=id)
+    # chat = get_object_or_404(Chat , id=group.id)
+    chat = get_object_or_404(Chat , id=Chat.group.id)
+    chats = chat.objects.all()
+    form = ChatForm()
+    if request.method == 'POST':
+        if form.is_valid():
+            chat = Chat.save(commit=False)
+            chat.user = request.user
+            chat.save()
+            return redirect('chatting',id=chat.id)
+    else:
+        form.ChatForm()
+    return render(request,'Area_matching/debug_chat.html',{'form':form,'chats':chats})
+
+
+    
+    
 
 
 #################################################
+
+def group_user_matching(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+    user_area = user_profile.area
+    groups = Group.objects.filter(area=user_area)
+    matching_users = UserProfile.objects.filter(area = user_area)  
+
+    return render(request,'group.html',{'matched_groups':groups,'matching_users':matching_users})
+
+
+
+# def people_matching(request):
+#     user_profile = UserProfile.objects.get(user=request.user)
+#     matching_users = UserProfile.objects.filter(area = user_area)
+
+#     return render(request,"Area_matching/debug.html",{'matching_users':matching_users})
