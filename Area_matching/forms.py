@@ -18,3 +18,8 @@ class ChatForm(forms.ModelForm):
     class Meta:
         model = Chat
         fields = ['text']
+    def __init__(self, *args, **kwargs):
+        super(ChatForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs["class"] = "form-control"
+            field.widget.attrs["placeholder"] = field.label

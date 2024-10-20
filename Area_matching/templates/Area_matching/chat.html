@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <title>チャットルーム</title>
     <style>
         body {
@@ -23,7 +24,7 @@
         }
 
         #chat-container {
-            width: 400px;
+            width: 800px;
             height: 500px;
             background-color: #fff;
             border-radius: 10px;
@@ -31,6 +32,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            align-self:center;
         }
 
         #messages {
@@ -42,6 +44,7 @@
 
         .message {
             margin-bottom: 10px;
+            display: flex;
         }
 
         .message .user {
@@ -54,18 +57,39 @@
             color: #333;
         }
 
-            /* ナビゲーションバーのスタイル */
-         .nav-container {
+        sent{
+            width:800px;
+            height:100px;
+            padding:8px;
+            border:1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 16px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            }
+
+         /* ナビゲーションバーのスタイル */
+        .nav-container {
           max-width: 800px;
           margin: 0 auto;
-          background-color: white;
+          background-color: #333;
           border-radius: 10px;
           box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
           padding: 10px 0;
         }
 
         nav {
-          background-color: #333;
+         background-color: #333;
           padding: 10px 0;
           text-align: center;
         }
@@ -73,7 +97,7 @@
         nav a {
           color: white;
           padding: 14px 20px;
-              text-decoration: none;
+          text-decoration: none;
           font-size: 18px;
           display: inline-block;
         }
@@ -83,93 +107,60 @@
           color: white;
           border-radius: 5px;
         }
-        #input-container {
-            display: flex;
-            padding: 10px;
-            background-color: #f7f7f7;
-            border-top: 1px solid #ddd;
-        }
-
-        #input-container input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        #input-container button {
-            padding: 10px 15px;
-            margin-left: 10px;
-            border: none;
-            background-color: #4CAF50;
-            color: white;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        #input-container button:hover {
-            background-color: #45a049;
-        }
         
     </style>
 </head>
 
 <body>
     <!-- ナビゲーションバー -->
-  <div class="nav-container">
-    <nav>
-      <a href="{% url 'index' %}">ホーム</a>
-      <a href="{% url 'profile' %}">プロファイル</a>
-      <a href="{% url 'create_group' %}">グループ作成</a>
-      <a href="{% url 'logout' %}">ログアウト</a>
-    </nav>
-  </div>
-    <h1>{{ group.title }}</h1>
+    <div class="nav-container">
+        <nav>
+          <a href="{% url 'index' %}">ホーム</a>
+          <a href="{% url 'profile' %}">プロファイル</a>
+          <a href="{% url 'create_group' %}">グループ作成</a>
+          
+          {% if not user.is_authenticated %}
+          <a href="{% url 'login' %}">
+            <button>ログイン</button>
+          </a>
+          {% endif %}
+          {% if user.is_authenticated %}
+          <form action="{% url 'logout' %}" method="post" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit">Logout</button>
+          </form>
+          {% endif %}
+        </nav>
+      </div>
+    <h1>{{ group.group_name }}</h1>
     <div id="chat-container">
-        <div id="messages"></div>
-        <div id="input-container">
-            <input type="text" id="messageInput" placeholder="メッセージを入力(Enter your message)...">
-            <button onclick="sendMessage()">送信(sent)</button>
+        <div id = "messages">
+            <h2>チャットメッセージ</h2>
+            {% for chat in chats %}
+            <p><strong>{{ chat.user.userprofile.nickname }}:</strong> {{ chat.text }}</p>
+            {% empty %}
+            <p>まだチャットメッセージはありません。</p>
+            {% endfor %}
         </div>
     </div>
 
+    <form method="post" class="border rounded bg-light mt-3" >
+        {% csrf_token %}
+        <div id = "sent">
+            {{ form.text }}
+        </div>
+        <button type="submit" class="btn btn-primary">送信</button>
+    </form>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <script>
-        const messagesDiv = document.getElementById('messages');
-        const messageInput = document.getElementById('messageInput');
-
-        function sendMessage() {
-            const messageText = messageInput.value.trim();
-            //何も入力していない場合、実行されない
-            if (messageText === "") return;
-            //テキストのスタイルを指定するためのdivクラスを用意する
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message');
-            //メッセージ送信者の表示のため、span要素を追加
-            const userSpan = document.createElement('span');
-            userSpan.classList.add('user');
-            userSpan.textContent = "user";
-
-            const textSpan = document.createElement('span');
-            textSpan.classList.add('text');
-            textSpan.textContent = messageText;
-
-            messageDiv.appendChild(userSpan);
-            messageDiv.appendChild(textSpan);
-            messagesDiv.appendChild(messageDiv);
-
-            messageInput.value = "";
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        // Enterキーでも送信できるように
-        messageInput.addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                sendMessage();
-            }
-        });
+        // ページが読み込まれたときに一番下までスクロール
+        window.onload = function() {
+            var messagesContainer = document.getElementById('messages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        };
     </script>
 </body>
 </html>

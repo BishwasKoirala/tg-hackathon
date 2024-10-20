@@ -55,6 +55,11 @@
     }
     .group li, .user li {
       margin-bottom: 20px;
+      padding: 10px;
+      border: 2px solid gray;
+      border-radius: 15px; 
+      background-color: #f9f9f9; 
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 影をつける */
     }
     .group-wrapper, .user-wrapper {
       margin-bottom: 20px;
@@ -64,8 +69,8 @@
       text-align: center;
       margin-top: 20px;
     }
-        /* ナビゲーションバーのスタイル */
-        .nav-container {
+    /* ナビゲーションバーのスタイル */
+    .nav-container {
       max-width: 800px;
       margin: 0 auto;
       background-color: white;
@@ -103,7 +108,18 @@
         <a href="{% url 'index' %}">ホーム</a>
         <a href="{% url 'profile' %}">プロファイル</a>
         <a href="{% url 'create_group' %}">グループ作成</a>
-        <a href="{% url 'logout' %}">ログアウト</a>
+        
+        {% if not user.is_authenticated %}
+        <a href="{% url 'login' %}">
+          <button>ログイン</button>
+        </a>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+        </form>
+        {% endif %}
       </nav>
     </div>
   <h1>チャットを選択(Select chat)</h1>
@@ -115,10 +131,10 @@
       <ul>
         {% for group in groups %}
         <li>
-          <p>{{ group.group_name }}</p>
+          <p>グループ名(Group name):{{ group.group_name }}</p>
           <p>地域/Area: {{ group.area }}</p>
           <p>管理者(Nickname): {{ group.admin_user.userprofile.nickname }}</p>
-          <a href="{% url 'chat' %}"><button>チャットへ参加(go to chat)</button></a>
+          <a href="{% url 'group_chat' group.id %}"><button>チャットへ参加(go to chat)</button></a>
         </li>
         {% endfor %}
       </ul>
@@ -132,7 +148,7 @@
         {% for matching_user in matching_users %}
         <li>
           <p>ユーザー(Nickname): {{ matching_user.user.userprofile.nickname }}</p>
-          <a href="{% url 'chat'%}"><button>チャットへ参加(go to chat)</button></a>
+          {% comment %} <a href="{% url 'group_chat' groups.id %}"><button>チャットへ参加(go to chat)</button></a> {% endcomment %}
         </li>
         {% endfor %}
       </ul>

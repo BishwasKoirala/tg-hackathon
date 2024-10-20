@@ -39,9 +39,9 @@ def group(request):
     group = Group.objects.all()
     return render(request,"Area_matching/group.html")
 
-def chat(request):
-    chat = Chat.objects.all()
-    return render(request,"Area_matching/chat.html")
+#def chat(request):
+    #chat = Chat.objects.all()
+    #return render(request,"Area_matching/chat.html")
 
 
 def chat_eng(request):
@@ -143,7 +143,7 @@ def create_group(request):
 
 def chatting(request,id):
     group = get_object_or_404(Group, id=id)
-    chats = group.chat.all()
+    chats = group.chat.all().order_by('posted_at') 
     form = ChatForm()
     if request.method == 'POST':
         form = ChatForm(request.POST)
@@ -155,7 +155,7 @@ def chatting(request,id):
             return redirect('group_chat',id=group.id)
         else:
             form.ChatForm()
-    return render(request,'Area_matching/debug_chat.html',{'form':form,'group': group, 'chats':chats})
+    return render(request,'Area_matching/chat.html',{'form':form,'group': group, 'chats':chats})
 
 
 
@@ -166,10 +166,21 @@ def chatting(request,id):
 def group_user_matching(request):
     user_profile = UserProfile.objects.get(user=request.user)
     user_area = user_profile.area
-    groups = Group.objects.filter(area=user_area)
-    matching_users = UserProfile.objects.filter(area = user_area)  
+    groups = Group.objects.filter(area=user_area)  # ユーザーの地域に基づいてグループをフィルタリング
 
-    return render(request,'Area_matching/group.html',{'matched_groups':groups,'matching_users':matching_users})
+    matching_users = UserProfile.objects.filter(area = user_area)
+
+    if request.method == 'POST':
+        Group_form = GroupForm(request.POST)
+        if Group_form.is_valid():
+            group = Group_form.save(commit=False)
+            group.admin_user = request.user
+            group.save()
+            return redirect('create_group')
+    else:
+        Group_form = GroupForm()
+    # return render(request,'Area_matching/debug.html',{'Group_form':Group_form,'groups':groups,'matching_users':matching_users})
+    return render(request,'Area_matching/group.html',{'Group_form':Group_form,'groups':groups,'matching_users':matching_users})
 
 
 

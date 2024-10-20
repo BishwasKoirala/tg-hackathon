@@ -16,19 +16,21 @@
             height: 100vh;
             flex-direction: column;
         }
+
+        /* ナビゲーションバーをregister-container内に移動 */
         .nav-container {
             width: 100%;
-            position: fixed;
-            top: 0;
             background-color: white;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
+            margin-bottom: 20px; /* ホームボタンとフォーム間にスペースを追加 */
         }
+
         nav {
             background-color: #333;
             padding: 10px 0;
             text-align: center;
         }
+
         nav a {
             color: white;
             padding: 14px 20px;
@@ -36,11 +38,13 @@
             font-size: 18px;
             display: inline-block;
         }
+
         nav a:hover {
             background-color: #4CAF50;
             color: white;
             border-radius: 5px;
         }
+
         .register-container {
             background-color: #fff;
             padding: 20px;
@@ -48,21 +52,25 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 500px;
-            margin-top: 100px; /* Add margin to push the form down */
+            margin-top: 50px; /* ホームボタンを少し下げる */
         }
+
         h1 {
             text-align: center;
             color: #333;
             margin-bottom: 20px;
         }
+
         form {
             display: flex;
             flex-direction: column;
         }
+
         label {
             margin-bottom: 5px;
             font-weight: bold;
         }
+
         input[type="text"] {
             padding: 10px;
             margin-bottom: 15px;
@@ -70,17 +78,21 @@
             border-radius: 5px;
             font-size: 16px;
         }
+
         .hobby-group {
             margin-bottom: 20px;
         }
+
         .hobby-group strong {
             display: block;
             margin-bottom: 10px;
             font-size: 16px;
         }
+
         input[type="checkbox"] {
             margin-right: 5px;
         }
+
         button {
             padding: 10px;
             background-color: #28a745;
@@ -91,28 +103,34 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
+
         button:hover {
             background-color: #218838;
         }
+
         p {
             text-align: center;
         }
+
         a {
             color: #007bff;
             text-decoration: none;
         }
+
         a:hover {
             text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="nav-container">
-        <nav>
-            <a href="{% url 'index' %}">ホーム</a>
-        </nav>
-    </div>
     <div class="register-container">
+        <!-- ナビゲーションバーをregister-containerの上部に配置 -->
+        <div class="nav-container">
+            <nav>
+                <a href="{% url 'index' %}">ホーム</a>
+            </nav>
+        </div>
+
         <h1>ユーザー登録(User Registration)</h1>
         <form method="POST" action="{% url 'group' %}">
             {% csrf_token %}

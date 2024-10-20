@@ -95,42 +95,35 @@
 <body>
   <!-- ナビゲーションバー -->
   <div class="nav-container">
-    <nav>
-      <a href="{% url 'index' %}">ホーム</a>
-      <a href="{% url 'profile' %}">プロファイル</a>
-      <a href="{% url 'create_group' %}">グループ作成</a>
-      <a href="{% url 'logout' %}">ログアウト</a>
-    </nav>
+    <div class="nav-container">
+      <nav>
+        <a href="{% url 'index' %}">ホーム</a>
+        <a href="{% url 'profile' %}">プロファイル</a>
+        <a href="{% url 'create_group' %}">グループ作成</a>
+        
+        {% if not user.is_authenticated %}
+        <a href="{% url 'login' %}">
+          <button>ログイン</button>
+        </a>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+        </form>
+        {% endif %}
+      </nav>
   </div>
   <div class = 'container'>
   <h1>地域マッチングアプリ</h1>
   <h3>Hello {{ user.username }}</h3>
-  <a href="{% url 'create_group' %}">デバッグページ</a>
-
   {% if user.is_authenticated %}
     <a href = "{% url 'user_reg'%}">
       <button type = "button">スタート</button>
     </a>
   {% endif %}
   <br>
-  <hr>
-    <!-- ログインとかのやつ -->
-     {% if not user.is_authenticated %}
-    <a href="{% url 'login' %}">
-      <button>ログイン</button>
-    </a>
-    <br>
-    
-    <hr>
-    {% endif %}
-    {% if user.is_authenticated %}
-    <form action="{% url 'logout' %}" method="post" style="display:inline;">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-    </form>
-    {% endif %}
-    <br>
-    <hr>
+  
     {% if user.is_authenticated %}
     <a href = "{% url 'profile'%}">
       <button>プロファイルへ</button>
@@ -144,11 +137,14 @@
     {% endfor %}
   </div>
 
+  {% if user.is_authenticated %}
   <div class = "area-list">
-  {% for area in areas %}
-  <h2>{{ area.area_name }}</h2>
+    {% for area in areas %}
+
+  <h2>地域: {{ area.area_name }}</h2>
   {% endfor %}
   </div>
+  {% endif %}
 </div>
 </body>
 </html>
