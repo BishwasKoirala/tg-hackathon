@@ -136,6 +136,7 @@ def create_group(request):
             return redirect('create_group')
     else:
         Group_form = GroupForm()
+    # return render(request,'Area_matching/debug.html',{'Group_form':Group_form,'groups':groups,'matching_users':matching_users})
     return render(request,'Area_matching/debug.html',{'Group_form':Group_form,'groups':groups,'matching_users':matching_users})
 
 

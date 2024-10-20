@@ -31,5 +31,5 @@ urlpatterns = [
     path('create-group/', create_group, name='create_group'),
     path('group/<int:id>/chat/', chatting, name='group_chat'),
     #path('group/<int:id>/chat/', chatting , name='group_chat'),
-    path('chat/<int:group>/chat/', chatting , name='group_chat'),
+    #path('chat/<int:group>/chat/', chatting , name='group_chat'),
 ]
