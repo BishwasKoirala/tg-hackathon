@@ -137,14 +137,6 @@
     {% endfor %}
   </div>
 
-  {% if user.is_authenticated %}
-  <div class = "area-list">
-    {% for area in areas %}
-
-  <h2>地域: {{ area.area_name }}</h2>
-  {% endfor %}
-  </div>
-  {% endif %}
 </div>
 </body>
 </html>

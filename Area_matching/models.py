@@ -48,3 +48,9 @@ class Chat(models.Model) :
 
     def __str__(self):
         return f"Chat by {self.user.username} in {self.group.group_name}"
+    
+
+class UserChat(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE, related_name='user_chats')
+    text = models.TextField(default=None)
+    posted_at=models.DateTimeField(auto_now_add=True)

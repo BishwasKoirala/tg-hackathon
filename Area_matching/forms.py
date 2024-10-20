@@ -1,5 +1,5 @@
 from django import forms
-from .models import Area,Group,Chat
+from .models import Area,Group,Chat,UserChat
 
 
 ##プロフィール作成、編集用Form
@@ -23,4 +23,4 @@ class ChatForm(forms.ModelForm):
         for field in self.fields.values():
             field.widget.attrs["class"] = "form-control"
             field.widget.attrs["placeholder"] = field.label
-            field.widget.attrs["style"] = "width: 800px; padding: 10px; font-size: 16px;"  # フォームの幅とスタイルを指定
+            field.widget.attrs["style"] = "width: 700px; height: 50px; padding: 10px; font-size: 16px;"  # フォームの幅とスタイルを指定
