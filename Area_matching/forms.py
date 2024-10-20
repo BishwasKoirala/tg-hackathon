@@ -23,3 +23,4 @@ class ChatForm(forms.ModelForm):
         for field in self.fields.values():
             field.widget.attrs["class"] = "form-control"
             field.widget.attrs["placeholder"] = field.label
+            field.widget.attrs["style"] = "width: 800px; padding: 10px; font-size: 16px;"  # フォームの幅とスタイルを指定

@@ -176,7 +176,7 @@ def group_user_matching(request):
             group = Group_form.save(commit=False)
             group.admin_user = request.user
             group.save()
-            return redirect('create_group')
+            return redirect('group')
     else:
         Group_form = GroupForm()
     # return render(request,'Area_matching/debug.html',{'Group_form':Group_form,'groups':groups,'matching_users':matching_users})

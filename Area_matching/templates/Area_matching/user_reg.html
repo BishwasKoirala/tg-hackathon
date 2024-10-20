@@ -131,16 +131,10 @@
             </nav>
         </div>
 
-        <h1>ユーザー登録(User Registration)</h1>
+        <h1>共通点・趣味</h1>
+        <h1>Similarities ・ Hobbies</h1>
         <form method="POST" action="{% url 'group' %}">
             {% csrf_token %}
-            <label for="nickname">ニックネーム(Nickname):</label>
-            <input type="text" id="nickname" name="nickname" required>
-
-            <label for="region">地域(Area):</label>
-            <input type="text" id="region" name="region" required>
-
-            <label>趣味(hobbies):</label>
             <div>
                 <div class="hobby-group">
                     <strong>アニメ(Anime)</strong>

@@ -3,35 +3,134 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>地域マッチングアプリ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #4CAF50;
+      text-align: center;
+    }
+
+    h3 {
+      color: #333;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 16px;
+      margin: 10px 0;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #ddd;
+      margin: 20px 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .user-list h2 {
+      color: #333;
+      font-size: 18px;
+    }
+    /* ナビゲーションバーのスタイル */
+    .nav-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 10px 0;
+    }
+
+    nav {
+      background-color: #333;
+      padding: 10px 0;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      padding: 14px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      display: inline-block;
+    }
+
+    nav a:hover {
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
-  <h1>地域マッチングアプリ</h1>
-  <div>
-    <h3>グループ作成</h3>
-    <form method="post">
+  <!-- ナビゲーションバー -->
+  <div class="nav-container">
+    <nav>
+      <a href="{% url 'index' %}">ホーム</a>
+      <a href="{% url 'profile' %}">プロファイル</a>
+      <a href="{% url 'create_group' %}">グループ作成</a>
+    </nav>
+  </div>
+
+  <div class="container">
+    <h1>地域マッチングアプリ</h1>
+    <div>
+      <h3>グループ作成</h3>
+      <form method="post" action="{% url 'group' %}">
         {% csrf_token %}
         {{ Group_form.as_p }}
         <button type="submit">保存</button>
-    </form>
+      </form>
+    </div>
+
+    <hr>
+
+    <div>
+      {% for group in groups %}
+      <p>グループ名: <a href="{% url 'group_chat' group.id %}">{{ group.group_name }}</a></p>
+      <p>作成者: {{ group.admin_user.userprofile.nickname }}</p>
+      <p>地域: {{ group.area }}</p>
+      <p>{{ group.id }}</p>
+      {% endfor %}
+    </div>
+
+    <div>
+      {% for matching_user in matching_users %}
+      <p>マッチングユーザー : {{ matching_user.user.userprofile.nickname }}</p>
+      {% endfor %}
+    </div>
+
+    <a href="{% url 'index' %}">index</a>
   </div>
-  <div>
-    {% for group in groups %}
-    <p>グループ名: <a href="{% url 'group_chat' group.id %}">{{ group.group_name }}</a></p>
-    <p>作成者: {{ group.admin_user.userprofile.nickname }}</p>
-    <p>地域: {{ group.area }}</p>
-    <p>{{ group.id }}</p>
-    {% endfor %}
-  </div>
-
-  <div>
-    {% for matching_user in matching_users %}
-    <p>マッチングユーザー : {{ matching_user.user.userprofile.nickname }}</p>
-    {% endfor %}
-
-  </div>
-
-
-  <a href="{% url 'index' %}">index</a>
 </body>
 </html>
