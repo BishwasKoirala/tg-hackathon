@@ -60,10 +60,11 @@ def signup(request): #ユ－ザー登録機能
         if form.is_valid(): #form使えんの？
             user = form.save()
             login(request, user)
-            return redirect('profle')
+            return redirect('create_profile')
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
+
 
 @login_required
 def profile(request): #プロフィール確認,編集機能(地域とかニックネーム)
@@ -90,7 +91,7 @@ def profile(request): #プロフィール確認,編集機能(地域とかニッ�
     })
 
 
-@login_required
+
 def create_profile(request): #プロフィール追加機能
     # 現在ログインしているユーザーを取得
     user = request.user
@@ -106,9 +107,9 @@ def create_profile(request): #プロフィール追加機能
             if form.is_valid():
                 user_profile = UserProfile(user=user,
                                             area=form.cleaned_data['area'],
-                                            nickname =form.changed_data['name'])
+                                            nickname =form.cleaned_data['name'])
                 user_profile.save()
-                return redirect('profile')  # 作成後はプロファイルページへリダイレクト
+                return redirect('index')  # 作成後はプロファイルページへリダイレクト
         else:
             form = AreaSelectionForm()
 
@@ -117,6 +118,7 @@ def create_profile(request): #プロフィール追加機能
 #################################################
 
 ##################Group作成######################同じエリアのグルーも撮ってくれる
+
 @login_required
 def create_group(request):
     user_profile = UserProfile.objects.get(user=request.user)
@@ -140,7 +142,7 @@ def create_group(request):
     return render(request,'Area_matching/debug.html',{'Group_form':Group_form,'groups':groups,'matching_users':matching_users})
 
 
-
+@login_required
 def chatting(request,id):
     group = get_object_or_404(Group, id=id)
     chats = group.chat.all().order_by('posted_at') 
@@ -162,6 +164,7 @@ def chatting(request,id):
 
 
 #################################################
+
 
 def group_user_matching(request):
     user_profile = UserProfile.objects.get(user=request.user)

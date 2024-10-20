@@ -82,15 +82,14 @@
             align-items: center;
         }
 
-        /* 入力フォームのスタイル */
-        #sent input {
+        /* Djangoフォームのテキスト入力 */
+        .form-control {
             flex: 1;
             padding: 10px;
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 5px;
             margin-right: 10px; /* ボタンとの間に余白を追加 */
-            width: auto; /* サイズを自動調整 */
         }
 
         /* ボタンのスタイル */
@@ -161,6 +160,7 @@
           {% endif %}
         </nav>
     </div>
+    <h3><a href = "{% url 'group' %}">マッチング一覧へ</a></h3>
     <h1><br>{{ group.group_name }}</h1>
     <div id="chat-container">
         <div id = "messages">
@@ -177,8 +177,8 @@
         {% csrf_token %}
         <div id = "sent">
             {{ form.text }}
+            <button type="submit" class="btn-primary">送信</button>
         </div>
-        <button type="submit" class="btn-primary">送信</button>
     </form>
 
 
